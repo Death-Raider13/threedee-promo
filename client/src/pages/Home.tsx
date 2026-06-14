@@ -4,11 +4,9 @@ import { useEffect, useRef, useState } from "react";
  * Three Dee Safety — Professional Motion Graphics Promo (16:9 Landscape)
  * 
  * Design Philosophy: Industrial Cinematic
- * - Dramatic product-focused sequences with smooth transitions
- * - Golden hour lighting and industrial aesthetics
- * - Layered animations with professional timing
- * - Custom background music synchronized with visuals
- * - High-impact landscape format for ads and displays
+ * - Full-screen product sequences with smooth transitions
+ * - Optimized for 16:9 landscape format
+ * - Integrated all user-provided assets and music
  */
 
 interface Scene {
@@ -22,12 +20,18 @@ interface Scene {
 
 const SCENES: Scene[] = [
   {
-    id: "helmet",
-    image: "/manus-storage/three_dee_hero_helmet_e34e8ab9.png",
-    duration: 3.5,
+    id: "hero_ad",
+    image: "/assets/three_dee_ad_1_hero.png",
+    duration: 4,
     animation: "zoomIn",
     title: "Three Dee",
     subtitle: "Safety",
+  },
+  {
+    id: "helmet",
+    image: "/assets/three_dee_hero_helmet.png",
+    duration: 3,
+    animation: "zoomIn",
   },
   {
     id: "jacket",
@@ -37,7 +41,7 @@ const SCENES: Scene[] = [
   },
   {
     id: "gloves",
-    image: "/manus-storage/three_dee_hero_gloves_51691272.png",
+    image: "/assets/three_dee_hero_gloves.png",
     duration: 3,
     animation: "panLeft",
   },
@@ -49,7 +53,7 @@ const SCENES: Scene[] = [
   },
   {
     id: "vest",
-    image: "/manus-storage/three_dee_hero_vest_95bccde2.png",
+    image: "/assets/three_dee_hero_vest.png",
     duration: 3,
     animation: "zoomIn",
   },
@@ -61,31 +65,43 @@ const SCENES: Scene[] = [
   },
   {
     id: "harness",
-    image: "/manus-storage/three_dee_hero_harness_72317184.png",
+    image: "/assets/three_dee_hero_harness.png",
     duration: 3,
     animation: "panUp",
   },
   {
     id: "boot",
-    image: "/manus-storage/three_dee_hero_boot_0cd46e54.png",
+    image: "/assets/three_dee_hero_boot.png",
     duration: 3,
     animation: "zoomOut",
   },
   {
     id: "goggles",
-    image: "/manus-storage/three_dee_hero_goggles_fcd8dd21.png",
+    image: "/assets/three_dee_hero_goggles.png",
     duration: 3,
     animation: "panLeft",
   },
   {
-    id: "site",
+    id: "woman_creative",
+    image: "/assets/woman_ad_creative.png",
+    duration: 4,
+    animation: "zoomIn",
+  },
+  {
+    id: "professional_portrait",
+    image: "/assets/professional_portrait.png",
+    duration: 4,
+    animation: "panLeft",
+  },
+  {
+    id: "site_wide",
     image: "/assets/three_dee_site_wide.png",
-    duration: 3.5,
+    duration: 4,
     animation: "zoomIn",
   },
   {
     id: "tagline",
-    image: "",
+    image: "/assets/tagline_background.png",
     duration: 4,
     animation: "fade",
     title: "Tough Gear",
@@ -93,8 +109,8 @@ const SCENES: Scene[] = [
   },
   {
     id: "end",
-    image: "/manus-storage/three_dee_logo_highres_de075841.png",
-    duration: 3,
+    image: "/assets/three_dee_logo_highres.png",
+    duration: 4,
     animation: "scaleIn",
   },
 ];
@@ -125,7 +141,7 @@ export default function Home() {
     setCurrentScene(0);
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play();
+      audioRef.current.play().catch(e => console.log("Audio play failed:", e));
     }
     setIsPlaying(true);
   };
@@ -134,77 +150,63 @@ export default function Home() {
     const baseClass = "absolute inset-0 w-full h-full";
     switch (animation) {
       case "zoomIn":
-        return `${baseClass} animate-[zoom-in_3.5s_cubic-bezier(0.33,0,0.2,1)_forwards]`;
+        return `${baseClass} animate-[zoom-in_4s_cubic-bezier(0.33,0,0.2,1)_forwards]`;
       case "zoomOut":
-        return `${baseClass} animate-[zoom-out_3s_cubic-bezier(0.33,0,0.2,1)_forwards]`;
+        return `${baseClass} animate-[zoom-out_4s_cubic-bezier(0.33,0,0.2,1)_forwards]`;
       case "panLeft":
-        return `${baseClass} animate-[pan-left_3s_cubic-bezier(0.33,0,0.2,1)_forwards]`;
+        return `${baseClass} animate-[pan-left_4s_cubic-bezier(0.33,0,0.2,1)_forwards]`;
       case "panUp":
-        return `${baseClass} animate-[pan-up_3s_cubic-bezier(0.33,0,0.2,1)_forwards]`;
+        return `${baseClass} animate-[pan-up_4s_cubic-bezier(0.33,0,0.2,1)_forwards]`;
       case "scaleIn":
-        return `${baseClass} animate-[scale-in_3s_cubic-bezier(0.2,1.25,0.35,1)_forwards]`;
+        return `${baseClass} animate-[scale-in_4s_cubic-bezier(0.2,1.25,0.35,1)_forwards]`;
       case "fade":
       default:
-        return `${baseClass} animate-[fade-in_1s_ease-out_forwards]`;
+        return `${baseClass} animate-[fade-in_1.5s_ease-out_forwards]`;
     }
   };
-
-  const scene = SCENES[currentScene];
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center p-4">
       <style>{`
         @keyframes zoom-in {
-          from { transform: scale(1.02); }
-          to { transform: scale(1.17); }
+          from { transform: scale(1.0); }
+          to { transform: scale(1.15); }
         }
         @keyframes zoom-out {
-          from { transform: scale(1.19); }
-          to { transform: scale(1.05); }
+          from { transform: scale(1.15); }
+          to { transform: scale(1.0); }
         }
         @keyframes pan-left {
-          from { transform: scale(1.16) translateX(2.5%); }
-          to { transform: scale(1.16) translateX(-3.5%); }
+          from { transform: scale(1.1) translateX(2%); }
+          to { transform: scale(1.1) translateX(-2%); }
         }
         @keyframes pan-up {
-          from { transform: scale(1.16) translateY(3.5%); }
-          to { transform: scale(1.16) translateY(-3.5%); }
+          from { transform: scale(1.1) translateY(2%); }
+          to { transform: scale(1.1) translateY(-2%); }
         }
         @keyframes scale-in {
-          from { transform: scale(0.84); opacity: 0; }
+          from { transform: scale(0.8); opacity: 0; }
           to { transform: scale(1); opacity: 1; }
         }
         @keyframes fade-in {
           from { opacity: 0; }
           to { opacity: 1; }
         }
-        @keyframes shimmer {
-          0% { left: -50%; opacity: 0; }
-          12% { opacity: 0.85; }
-          88% { opacity: 0.85; }
-          100% { left: 140%; opacity: 0; }
-        }
-        @keyframes glint {
-          0% { left: -45%; opacity: 0; }
-          15% { opacity: 0.95; }
-          85% { opacity: 0.95; }
-          100% { left: 135%; opacity: 0; }
-        }
         .reel {
           aspect-ratio: 16 / 9;
           max-width: 1280px;
           width: 95vw;
-          border-radius: 20px;
+          border-radius: 12px;
           overflow: hidden;
-          background: #050506;
-          box-shadow: 0 30px 80px rgba(0, 0, 0, 0.65), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+          background: #000;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
           position: relative;
         }
         .scene {
           position: absolute;
           inset: 0;
           opacity: 0;
-          transition: opacity 0.8s ease;
+          transition: opacity 1s ease-in-out;
         }
         .scene.active {
           opacity: 1;
@@ -214,92 +216,59 @@ export default function Home() {
           background-position: center;
           will-change: transform;
         }
-        .scrim-bottom {
+        .overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(0deg, rgba(0, 0, 0, 0.78) 0%, transparent 42%);
+          background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 40%),
+                      linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 30%);
+          z-index: 5;
         }
-        .scrim-top {
+        .text-content {
           position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, transparent 30%);
-        }
-        .kicker {
-          position: absolute;
-          top: 5%;
-          left: 0;
-          right: 0;
-          text-align: center;
+          bottom: 10%;
+          left: 5%;
           z-index: 10;
-          font-weight: 800;
-          letter-spacing: 0.5em;
-          font-size: 3.3vw;
           color: white;
+          text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+        }
+        .title {
+          font-size: 5vw;
+          font-weight: 900;
           text-transform: uppercase;
-          opacity: 0;
-          transform: translateY(-1vh);
-          transition: opacity 0.7s ease, transform 0.7s ease;
-          text-indent: 0.5em;
+          letter-spacing: 0.1em;
+          margin: 0;
+          line-height: 1;
         }
-        .kicker.show {
-          opacity: 0.96;
-          transform: translateY(0);
-        }
-        .kicker-accent {
+        .subtitle {
+          font-size: 2.5vw;
           color: #F26522;
-          font-style: normal;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.3em;
+          margin-top: 0.5vh;
         }
-        .tagline-text {
+        .tagline-overlay {
           position: absolute;
           inset: 0;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          z-index: 10;
-          background: radial-gradient(120% 90% at 50% 40%, #16171b 0%, #070708 70%);
+          z-index: 20;
+          background: rgba(0,0,0,0.4);
           text-align: center;
         }
-        .tagline-line {
-          font-family: "Arial Black", "Helvetica Neue", Impact, sans-serif;
-          text-transform: uppercase;
-          line-height: 0.9;
-          font-weight: 900;
-        }
         .tagline-main {
-          font-size: 18vw;
+          font-size: 8vw;
+          font-weight: 900;
           color: white;
-          opacity: 0;
-          filter: blur(16px);
-          transition: opacity 0.35s ease, filter 0.5s ease;
-          text-shadow: 0 6px 22px rgba(0, 0, 0, 0.6);
-        }
-        .tagline-main.show {
-          opacity: 1;
-          filter: blur(0);
+          text-transform: uppercase;
         }
         .tagline-accent {
-          font-size: 18vw;
+          font-size: 6vw;
+          font-weight: 900;
           color: #F26522;
-          clip-path: inset(0 100% 0 0);
-          opacity: 0;
-          transition: clip-path 0.55s cubic-bezier(0.7, 0, 0.2, 1) 0.35s, opacity 0.1s ease 0.35s;
-          margin-top: 1vh;
-          text-shadow: 0 4px 0 rgba(0, 0, 0, 0.35);
-        }
-        .tagline-accent.show {
-          opacity: 1;
-          clip-path: inset(0 0 0 0);
-        }
-        .tagline-rule {
-          width: 0;
-          height: 0.6vh;
-          background: #F26522;
-          margin-top: 3vh;
-          transition: width 0.6s ease 0.85s;
-        }
-        .tagline-rule.show {
-          width: 40vw;
+          text-transform: uppercase;
         }
         .end-card {
           position: absolute;
@@ -308,203 +277,91 @@ export default function Home() {
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          z-index: 10;
-          background: radial-gradient(120% 90% at 50% 46%, #1a1b20 0%, #070708 72%);
-        }
-        .end-spot {
-          position: absolute;
-          width: 120vw;
-          height: 120vw;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(242, 101, 34, 0.2), transparent 60%);
-          filter: blur(6px);
+          background: radial-gradient(circle, #1a1a1a 0%, #000 100%);
+          z-index: 30;
         }
         .end-logo {
-          width: 78%;
-          opacity: 0;
-          transform: scale(0.84);
-          position: relative;
-          z-index: 20;
-          filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.55));
-          transition: opacity 0.5s ease, transform 0.9s cubic-bezier(0.2, 1.25, 0.35, 1);
-        }
-        .end-logo.show {
-          opacity: 1;
-          transform: scale(1);
-        }
-        .end-rule {
-          width: 0;
-          height: 0.5vh;
-          background: #F26522;
-          margin-top: 4vh;
-          position: relative;
-          z-index: 20;
-          transition: width 0.7s ease 0.5s;
-        }
-        .end-rule.show {
-          width: 32vw;
-        }
-        .end-tag {
-          margin-top: 3vh;
-          font-weight: 800;
-          letter-spacing: 0.16em;
-          font-size: 3.8vw;
-          color: #B6B6BE;
-          text-transform: uppercase;
-          opacity: 0;
-          position: relative;
-          z-index: 20;
-          transition: opacity 0.6s ease 0.6s;
-        }
-        .end-tag.show {
-          opacity: 1;
-        }
-        .end-tag-bold {
-          color: white;
-        }
-        .vignette {
-          position: absolute;
-          inset: 0;
-          z-index: 5;
-          pointer-events: none;
-          background: radial-gradient(125% 95% at 50% 44%, transparent 50%, rgba(0, 0, 0, 0.5) 100%);
-        }
-        .grain {
-          position: absolute;
-          inset: -50%;
-          z-index: 6;
-          pointer-events: none;
-          opacity: 0.05;
-          mix-blend-mode: overlay;
-          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-          animation: grain 1.1s steps(3) infinite;
-        }
-        @keyframes grain {
-          0% { transform: translate(0, 0); }
-          33% { transform: translate(-3%, 2%); }
-          66% { transform: translate(2%, -2%); }
-          100% { transform: translate(0, 0); }
+          width: 50%;
+          max-width: 600px;
+          filter: drop-shadow(0 0 20px rgba(242, 101, 34, 0.3));
         }
         .controls {
+          margin-top: 24px;
           display: flex;
-          gap: 10px;
+          gap: 16px;
           align-items: center;
-          margin-top: 20px;
         }
         .btn {
-          font: 600 13px system-ui;
-          color: #0c0c0d;
           background: #F26522;
-          border: 0;
-          padding: 9px 18px;
-          border-radius: 999px;
+          color: white;
+          border: none;
+          padding: 12px 32px;
+          border-radius: 30px;
+          font-weight: 700;
           cursor: pointer;
-          letter-spacing: 0.02em;
-          box-shadow: 0 6px 18px rgba(242, 101, 34, 0.35);
-          transition: transform 0.15s ease, filter 0.15s ease;
+          transition: all 0.2s;
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
         }
         .btn:hover {
-          filter: brightness(1.08);
-          transform: translateY(-1px);
-        }
-        .hint {
-          color: #55555c;
-          font-size: 12px;
+          transform: scale(1.05);
+          filter: brightness(1.1);
         }
       `}</style>
 
       <div className="reel" ref={reelRef}>
-        {/* Product scenes */}
         {SCENES.map((s, idx) => (
           <div
             key={s.id}
             className={`scene ${currentScene === idx ? "active" : ""}`}
           >
             {s.image && (
-              <>
-                <div
-                  className={`scene-image ${getAnimationClass(s.animation)}`}
-                  style={{ backgroundImage: `url(${s.image})` }}
-                />
-                {s.id !== "helmet" && <div className="scrim-bottom" />}
-                {s.id === "helmet" && <div className="scrim-top" />}
-              </>
+              <div
+                className={`scene-image ${getAnimationClass(s.animation)}`}
+                style={{ backgroundImage: `url(${s.image})` }}
+              />
             )}
+            <div className="overlay" />
 
-            {/* Kicker text for helmet scene */}
-            {s.id === "helmet" && (
-              <div className={`kicker ${currentScene === idx ? "show" : ""}`}>
-                Three&nbsp;Dee&nbsp;
-                <span className="kicker-accent">Safety</span>
+            {/* Content for scenes with titles */}
+            {s.title && s.id !== "tagline" && (
+              <div className="text-content">
+                <h1 className="title">{s.title}</h1>
+                <p className="subtitle">{s.subtitle}</p>
               </div>
             )}
 
-            {/* Tagline scene */}
+            {/* Special Tagline Scene */}
             {s.id === "tagline" && (
-              <div className="tagline-text">
-                <div
-                  className={`tagline-line tagline-main ${
-                    currentScene === idx ? "show" : ""
-                  }`}
-                >
-                  Tough Gear
-                </div>
-                <div
-                  className={`tagline-line tagline-accent ${
-                    currentScene === idx ? "show" : ""
-                  }`}
-                >
-                  For Tough Jobs.
-                </div>
-                <div
-                  className={`tagline-rule ${currentScene === idx ? "show" : ""}`}
-                />
+              <div className="tagline-overlay">
+                <div className="tagline-main">Tough Gear</div>
+                <div className="tagline-accent">For Tough Jobs.</div>
               </div>
             )}
 
-            {/* End card */}
+            {/* End Card */}
             {s.id === "end" && (
               <div className="end-card">
-                <div className="end-spot" />
-                <img
-                  src={s.image}
-                  alt="Three Dee Safety"
-                  className={`end-logo ${currentScene === idx ? "show" : ""}`}
-                />
-                <div
-                  className={`end-rule ${currentScene === idx ? "show" : ""}`}
-                />
-                <div
-                  className={`end-tag ${currentScene === idx ? "show" : ""}`}
-                >
-                  <span className="end-tag-bold">Tough gear</span> for tough
-                  jobs.
-                </div>
+                <img src={s.image} alt="Logo" className="end-logo" />
+                <p className="subtitle" style={{ marginTop: '2rem' }}>Safety. Quality. Commitment.</p>
               </div>
             )}
           </div>
         ))}
-
-        {/* Atmosphere */}
-        <div className="vignette" />
-        <div className="grain" />
       </div>
 
-      {/* Controls */}
       <div className="controls">
         <button className="btn" onClick={handleReplay}>
-          Replay
+          Replay Animation
         </button>
-        <span className="hint">16:9 · ~38s loop</span>
+        <p className="text-gray-500 text-sm">16:9 Landscape • Full Asset Sequence</p>
       </div>
 
-      {/* Background music */}
       <audio
         ref={audioRef}
-        src="/manus-storage/safety_promo_music_0e240895.wav"
+        src="/assets/safety_promo_music.wav"
         loop
         autoPlay
-        className="hidden"
       />
     </div>
   );
