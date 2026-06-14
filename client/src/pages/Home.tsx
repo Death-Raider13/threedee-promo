@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
 /**
- * Three Dee Safety — Professional Motion Graphics Promo
+ * Three Dee Safety — Professional Motion Graphics Promo (16:9 Landscape)
  * 
  * Design Philosophy: Industrial Cinematic
  * - Dramatic product-focused sequences with smooth transitions
  * - Golden hour lighting and industrial aesthetics
  * - Layered animations with professional timing
  * - Custom background music synchronized with visuals
+ * - High-impact landscape format for ads and displays
  */
 
 interface Scene {
@@ -29,16 +30,34 @@ const SCENES: Scene[] = [
     subtitle: "Safety",
   },
   {
+    id: "jacket",
+    image: "/assets/three_dee_hero_jacket.png",
+    duration: 3,
+    animation: "panLeft",
+  },
+  {
     id: "gloves",
     image: "/manus-storage/three_dee_hero_gloves_51691272.png",
     duration: 3,
     animation: "panLeft",
   },
   {
+    id: "earmuffs",
+    image: "/assets/three_dee_hero_earmuffs.png",
+    duration: 3,
+    animation: "zoomIn",
+  },
+  {
     id: "vest",
     image: "/manus-storage/three_dee_hero_vest_95bccde2.png",
     duration: 3,
     animation: "zoomIn",
+  },
+  {
+    id: "suit",
+    image: "/assets/three_dee_hero_suit.png",
+    duration: 3,
+    animation: "panUp",
   },
   {
     id: "harness",
@@ -57,6 +76,12 @@ const SCENES: Scene[] = [
     image: "/manus-storage/three_dee_hero_goggles_fcd8dd21.png",
     duration: 3,
     animation: "panLeft",
+  },
+  {
+    id: "site",
+    image: "/assets/three_dee_site_wide.png",
+    duration: 3.5,
+    animation: "zoomIn",
   },
   {
     id: "tagline",
@@ -166,9 +191,9 @@ export default function Home() {
           100% { left: 135%; opacity: 0; }
         }
         .reel {
-          aspect-ratio: 9 / 16;
-          max-width: 430px;
-          width: 92vw;
+          aspect-ratio: 16 / 9;
+          max-width: 1280px;
+          width: 95vw;
           border-radius: 20px;
           overflow: hidden;
           background: #050506;
@@ -470,7 +495,7 @@ export default function Home() {
         <button className="btn" onClick={handleReplay}>
           Replay
         </button>
-        <span className="hint">9:16 · ~25s loop</span>
+        <span className="hint">16:9 · ~38s loop</span>
       </div>
 
       {/* Background music */}
